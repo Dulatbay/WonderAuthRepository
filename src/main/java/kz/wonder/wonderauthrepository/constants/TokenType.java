@@ -1,5 +1,3 @@
 package kz.wonder.wonderauthrepository.constants;
 
-public enum TokenType {
-  BEARER
-}
+public enum TokenType {BEARER}
