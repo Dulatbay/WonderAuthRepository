@@ -2,6 +2,7 @@ package kz.wonder.wonderauthrepository.services;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kz.wonder.wonderauthrepository.constants.Role;
 import kz.wonder.wonderauthrepository.dto.ChangePasswordRequest;
 import kz.wonder.wonderauthrepository.entities.User;
 import kz.wonder.wonderauthrepository.repositories.TokenRepository;
@@ -40,6 +41,9 @@ public class UserService {
 
     public void addRoleToUser(Principal connectedUser, String roleName) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+        var role = Role.valueOf(roleName);
 
+        user.setRole(role);
+        repository.save(user);
     }
 }
