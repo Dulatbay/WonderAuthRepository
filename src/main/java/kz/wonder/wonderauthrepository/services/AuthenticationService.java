@@ -9,10 +9,12 @@ import kz.wonder.wonderauthrepository.dto.AuthenticationResponse;
 import kz.wonder.wonderauthrepository.dto.RegisterRequest;
 import kz.wonder.wonderauthrepository.entities.Token;
 import kz.wonder.wonderauthrepository.entities.User;
+import kz.wonder.wonderauthrepository.exceptions.DbObjectNotFoundException;
 import kz.wonder.wonderauthrepository.repositories.TokenRepository;
 import kz.wonder.wonderauthrepository.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -102,7 +104,7 @@ public class AuthenticationService {
         userEmail = jwtService.extractUsername(refreshToken);
         if (userEmail != null) {
             var user = this.repository.findByEmail(userEmail)
-                    .orElseThrow(() -> new IllegalArgumentException("Token is empty"));
+                    .orElseThrow(() -> new DbObjectNotFoundException(HttpStatus.BAD_REQUEST.getReasonPhrase(), "Token is invalid"));
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
@@ -113,7 +115,7 @@ public class AuthenticationService {
                         .build();
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             } else {
-                throw new IllegalArgumentException("Token is empty");
+                throw new IllegalArgumentException("Token is invalid");
             }
         } else
             throw new IllegalArgumentException("Token is empty");
