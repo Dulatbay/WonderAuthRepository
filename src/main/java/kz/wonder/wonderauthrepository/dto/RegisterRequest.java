@@ -12,9 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-  private String firstname;
-  private String lastname;
-  private String email;
-  private String password;
-  private Role role;
+    @NotNull(message = "Firstname must not be null")
+    private String firstname;
+    @NotNull(message = "Lastname must not be null")
+    private String lastname;
+    @NotNull(message = "Email must not be null")
+    private String email;
+    @NotNull(message = "Password must not be null")
+    private String password;
 }
