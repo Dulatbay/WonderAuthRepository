@@ -3,13 +3,12 @@ package kz.wonder.wonderauthrepository.controllers;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import kz.wonder.wonderauthrepository.dto.ChangePasswordRequest;
+import kz.wonder.wonderauthrepository.entities.User;
 import kz.wonder.wonderauthrepository.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -28,5 +27,10 @@ public class UserController {
     ) {
         service.changePassword(request, connectedUser);
         return ResponseEntity.ok().build();
+    }
+    @Operation(summary = "Change role of user")
+    @PostMapping("/add-role/{roleName}")
+    public void addRole(@PathVariable String roleName, Principal connectedUser) {
+        service.addRoleToUser(connectedUser, roleName);
     }
 }

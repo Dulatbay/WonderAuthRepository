@@ -38,4 +38,8 @@ public class UserService {
         repository.save(user);
     }
 
+    public void addRoleToUser(Principal connectedUser, String roleName) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+    }
 }

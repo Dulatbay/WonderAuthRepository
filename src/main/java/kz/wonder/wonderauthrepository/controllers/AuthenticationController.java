@@ -48,10 +48,5 @@ public class AuthenticationController {
         service.refreshToken(request, response);
     }
 
-    @Operation(summary = "Change role of user")
-    @PostMapping("/add-role")
-    public void addRole(HttpServletRequest request,
-                        HttpServletResponse response) {
 
-    }
 }

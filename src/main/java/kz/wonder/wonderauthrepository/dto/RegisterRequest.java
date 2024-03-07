@@ -1,5 +1,6 @@
 package kz.wonder.wonderauthrepository.dto;
 
+import jakarta.validation.constraints.NotNull;
 import kz.wonder.wonderauthrepository.constants.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-
   private String firstname;
   private String lastname;
   private String email;
